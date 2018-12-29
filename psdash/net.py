@@ -19,7 +19,7 @@ class NetIOCounters(object):
         counters = psutil.net_io_counters(pernic=self.pernic)
 
         res = {}
-        for name, io in counters.iteritems():
+        for name, io in counters.items():
             res[name] = io._asdict()
             res[name].update({'tx_per_sec': 0, 'rx_per_sec': 0})
 
@@ -43,7 +43,7 @@ class NetIOCounters(object):
         if not time_delta:
             return counters
 
-        for name, io in counters.iteritems():
+        for name, io in counters.items():
             last_io = self.last_req.get(name)
             if not last_io:
                 continue
@@ -73,9 +73,9 @@ def get_interface_addresses():
         families = addrs.keys()
 
         # put IPv4 to the end so it lists as the main iface address
-        if netifaces.AF_INET in families:
-            families.remove(netifaces.AF_INET)
-            families.append(netifaces.AF_INET)
+        #if netifaces.AF_INET in families:
+        #    families.remove(netifaces.AF_INET)
+        #    families.append(netifaces.AF_INET)
 
         for family in families:
             for addr in addrs[family]:

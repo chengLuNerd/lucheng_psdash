@@ -41,8 +41,8 @@ def inject_header_data():
     uptime = timedelta(seconds=sysinfo['uptime'])
     uptime = str(uptime).split('.')[0]
     return {
-        'os': sysinfo['os'].decode('utf-8'),
-        'hostname': sysinfo['hostname'].decode('utf-8'),
+        'os': sysinfo['os'],
+        'hostname': sysinfo['hostname'],
         'uptime': uptime
     }
 
@@ -107,18 +107,18 @@ def access_denied(e):
 def index():
     sysinfo = current_service.get_sysinfo()
 
-    netifs = current_service.get_network_interfaces().values()
-    netifs.sort(key=lambda x: x.get('bytes_sent'), reverse=True)
+    #netifs = current_service.get_network_interfaces().values()
+    #netifs.sort(key=lambda x: x.get('bytes_sent'), reverse=True)
 
     data = {
-        'load_avg': sysinfo['load_avg'],
+        'load_avg': '',
         'num_cpus': sysinfo['num_cpus'],
         'memory': current_service.get_memory(),
         'swap': current_service.get_swap_space(),
         'disks': current_service.get_disks(),
         'cpu': current_service.get_cpu(),
         'users': current_service.get_users(),
-        'net_interfaces': netifs,
+        'net_interfaces': [],
         'page': 'overview',
         'is_xhr': request.is_xhr
     }
